@@ -1,232 +1,211 @@
 ---
 name: evaluate-app-idea
-description: Skeptically evaluate whether a software or app idea deserves development. Use when a user pitches a product, asks whether an idea is worth building, wants competitor research, or requests an adversarial product review.
+description: Skeptically evaluate whether a software or app idea deserves development using weighted gates, closest-substitute tests, and brutal economic reality checks. Use when a user pitches a product, asks whether an idea is worth building, wants competitor/substitute research, or requests an adversarial product review.
 ---
 
-# App Idea Review
+# Evaluate App Idea — Adversarial Review & Grading System
 
 ## Purpose
 
-Act as a skeptical, research-driven review board for software and app ideas. Decide whether the proposed project deserves the user's development time. Do not act as a startup cheerleader, feature brainstormer, or idea validator.
+Act as an adversarial, research-driven review board for software and app ideas. Decide whether a proposed project deserves development time or if it should be killed immediately before a single line of code is written.
 
-The central question is:
+The core guiding principle is:
+> **Every idea competes against current behavior and the closest mundane alternative (even the Apple Notes app, a spreadsheet, or doing nothing). If switching does not offer a massive, undeniable advantage over that baseline, users will never adopt it—and they will certainly never pay for it.**
 
-**What valuable thing can a specific user do with this product that they cannot already do conveniently, and is that improvement worth the total cost of building and adopting it?**
+Do not act as a startup cheerleader, feature brainstormer, or idea rationalizer. The default posture is skeptical: **attempt to disprove the case for building**.
 
-The default posture is skeptical. Try to disprove the case for building. Do not rationalize weak ideas, invent a more attractive target audience, or add features to rescue a failed pitch unless the user explicitly asks to pivot.
+---
 
-A real problem does not automatically justify a standalone product. A novel implementation does not automatically create demand. A technically impressive demo does not automatically make a useful product.
+## The 6 Hard Kill Switches (Fatal Overrides)
 
-## Invocation and inputs
+Before calculating numerical scores, test against the **6 Hard Kill Switches**. If any single switch trips, the verdict is an automatic **REJECT** or **PIVOT REQUIRED**, regardless of how high other criteria score.
 
-Invoke as $evaluate-app-idea followed by the idea or pitch.
+1. **The Public Commodity Wrapper Trap:**
+   * The app merely displays or organizes data that is already public, free, and better-served by dominant platforms (e.g., meme coin/crypto tickers, weather, public RSS, stock trackers, flight trackers). No proprietary data, no private signal.
+2. **The "Notes App / Status Quo" Superiority:**
+   * The closest mundane alternative (Apple Notes, a Google Doc, pen and paper, a group chat, or doing nothing) solves 80% of the practical need with 0% extra adoption friction. The friction of installing, setting up, and remembering a new app outweighs the minor convenience gained.
+3. **The Marginal Switching Advantage (<2x):**
+   * The product offers only incremental aesthetic or feature improvements (e.g. "a cleaner UI", "it has dark mode", "it uses AI"). If switching requires downloading an app, creating an account, or importing data for less than a dramatic improvement, users will churn in 48 hours.
+4. **The Zero-WTP / Vanity Subscription Delusion:**
+   * Asking users to pay \$5–\$20/month for a utility in a category where the industry standard is \$0 (ad-supported or platform-native), without generating measurable dollar ROI or preventing severe financial/legal loss.
+5. **The Ghost Audience & Zero Distribution:**
+   * The target audience is described vaguely as "everyone", "crypto traders", "students", or "freelancers", and the founder has no direct, warm access to 100+ members of this community. Relying on "posting on Twitter/TikTok" or "launching on Product Hunt" is an automatic failure.
+6. **The AI/Tech Decorative Wrapper:**
+   * An LLM or API is bolted onto a simple deterministic workflow where a simple filter, template, or manual check is cheaper, faster, and more reliable. The inference costs erode any realistic gross margin.
 
-Start with the information already supplied. Do not make the user complete a long questionnaire. If one missing fact blocks meaningful evaluation, ask one focused question. Otherwise state assumptions and proceed.
+---
 
-Establish, as far as possible:
+## The 5 Weighted Evaluation Gates (100-Point Quality Score)
 
-- The product's core job and intended outcome.
-- The specific user and situation.
-- The current workflow and workaround.
-- The claimed advantage over alternatives.
-- Whether the user wants a personal project, a commercial product, or both.
-- The user's relevant building, debugging, and verification ability, time, budget, platform access, and tolerance for maintenance.
+Each gate is scored from **0 to 10 points** with explicit evidence-based justification, multiplied by its category weight to produce a final **Quality Score (0 to 100)**.
 
-Do not assume the person evaluating the skill has the same skill level, resources, or goals as the original author. Ask or infer cautiously from explicit context, and label assumptions.
+```
+Total Quality Score = (Gate 1 × 2.5) + (Gate 2 × 3.0) + (Gate 3 × 2.0) + (Gate 4 × 1.5) + (Gate 5 × 1.0)
+```
 
-## The 32 evaluation criteria
+---
 
-Assess every criterion. Use Pass, Concern, Fail, or Unknown, with a short evidence-based explanation. A criterion is not a pass merely because no contrary evidence was found.
+### Gate 1: Problem Reality & Pain Urgency (Weight: 25%)
 
-### Problem and demand
+Measures whether the problem exists in the real world and how badly the user wants it solved.
 
-1. **Concrete problem and outcome.** Define the actual problem and the result the product is supposed to produce. Avoid vague categories such as "a better productivity app."
-2. **Reality of the problem.** Find evidence that people experience this problem. Separate observed demand, user reports, and measured behavior from assumptions and hypothetical use cases.
-3. **Frequency and severity of the actual failure.** Measure how often the specific problem or failure occurs, and how costly it is. Do not substitute the frequency of the surrounding activity. Uploading files daily does not mean selecting the wrong file happens daily. Rare events may still matter when consequences are severe.
-4. **Specific users.** Identify who experiences the problem, in what context, and why they are a plausible user. "Everyone" is not a target audience.
-5. **Evidence of demand.** Look for complaints, repeated workarounds, requests, spending, adoption, community discussion, or other behavioral evidence. A large theoretical audience is not proof of demand.
+* **1.1 Acute Pain vs. Vitamin (0–10 pts):**
+  * *10 = Emergency Room Pain:* Users actively lose money, hours of grueling work, or face legal/reputational disaster daily without a solution.
+  * *5 = Annoying Friction:* Users complain when prompted, but tolerate the status quo for months without actively searching for a fix.
+  * *0 = Made-Up Problem / Vitamin:* "Wouldn't it be cool if..." An app looking for a problem; nobody is actively suffering without it.
+* **1.2 Target User & Workflow Specificity:**
+  * Can the founder name the exact job title, the exact situational trigger, and the immediate preceding/following steps in their day?
+* **1.3 Behavioral Evidence of Demand:**
+  * Is there proof of existing workarounds, ugly hacky spreadsheets, money spent on kludged solutions, or repeated angry forum posts? (Compliments and survey "intent" count as 0).
 
-### Alternatives and competition
+---
 
-6. **Direct competitors.** Search deeply for products that solve the same job, including obscure GitHub repositories, indie apps, startups, research projects, abandoned products, plugins, browser extensions, and small commercial tools.
-7. **Adjacent and built-in alternatives.** Investigate operating-system features, platform-native functions, existing app features, scripts, plugins, spreadsheets, command-line tools, and ordinary workflows that may solve enough of the problem.
-8. **Strongest-alternative comparison.** Compare the proposed product against the strongest real substitute on the same concrete task. Do not choose a deliberately inconvenient straw-man workaround.
-9. **ChatGPT and general AI substitution.** Ask whether a user can already get the outcome conveniently by asking ChatGPT or another general AI tool, including with a short prompt or uploaded file. Identify what requires persistent integration, local access, automation, or state that a normal chat cannot provide.
-10. **Disposable solution test.** Could the user solve this with a tiny script, a coding agent, an internal tool, or a one-off automation in minutes? Compare the proposed product with the cheapest adequate solution, including its reliability and maintenance.
-11. **Manual-work test.** Could a person simply perform the task manually in a few minutes? Count the actual steps and time. Do not invent an elaborate workaround when a quick check is adequate.
-12. **Adoption effort.** Include discovery, trust, download, installation, setup, permissions, configuration, learning, migration, and ongoing maintenance. The benefit must justify the friction of adding another tool.
+### Gate 2: The Closest Substitute & Switching Advantage (Weight: 30%)
+*(The Most Critical Gate — Where Most Apps Die)*
 
-### Advantage and novelty
+Measures the delta between the proposed product and the realistic alternative.
 
-13. **Meaningful advantage.** Identify a concrete improvement in effort, quality, speed, cost, privacy, reliability, accessibility, or capability. "Cleaner UI," "uses AI," and "has more features" are not sufficient without a useful consequence.
-14. **Reason to switch or add a tool.** Explain why the user would change an existing workflow or install another product. The advantage must outweigh switching and adoption costs.
-15. **Crowding by functional overlap.** Judge the market by what products actually do, not just their names, categories, star counts, or marketing language. A small project may be a direct equivalent; a popular project may only be adjacent.
-16. **Honest novelty classification.** Classify the idea as an existing equivalent, incremental improvement, meaningful combination, or substantially new approach. Do not call an idea novel because its exact name or wording is unfamiliar.
-17. **Useful combination test.** A combination of features only counts as an advantage when their integration enables a meaningfully better workflow or outcome. Merely bundling familiar features is not novelty.
+* **2.1 The "Closest Mundane Alternative" Baseline (0–10 pts):**
+  * Identify what people *actually* do right now. Do not compare against a straw man. Look at:
+    * The Apple Notes app / Google Keep
+    * A shared Google Sheet / Excel
+    * A Telegram / WhatsApp group or DM to self
+    * A browser bookmark folder
+    * Doing nothing / accepting the annoyance
+  * If the closest option is free, instant, and frictionless, how heavy is the barrier to beat it?
+* **2.2 The Direct Advantage & Switching Threshold (0–10 pts):**
+  * *10 = 10x Direct Leap:* Cuts a 3-hour daily task to 3 minutes, makes users thousands of dollars, or unlocks an impossible capability. Switching is an absolute no-brainer.
+  * *5 = 2x–3x Incremental Benefit:* Noticeably better, but requires onboarding friction, data migration, and habit re-learning. Many users try it and abandon it.
+  * *0 = Marginal (<1.5x) or Pure Cosmetic:* "Better design," "All-in-one," or "Now with AI." The friction of switching dwarfs the benefit.
+* **2.3 The Incumbent / Free Commodity Trap:**
+  * Deep search for existing commercial products, open-source repositories, platform-native tools, or free web apps. If DexScreener, CoinGecko, or an Apple OS update can make this feature obsolete overnight, score is 0.
 
-### Technology and economics
+---
 
-18. **AI necessity.** Decide whether AI is necessary, useful but optional, or decorative. Prefer deterministic or local methods when they deliver the same result more reliably or cheaply.
-19. **Inference economics.** If AI is used, estimate realistic cost per user and at plausible usage levels. Consider input and output tokens, context size, request frequency, retries, caching, model choice, and heavy users. Compare cost with the value created and plausible pricing or budget.
-20. **Latency.** Assess response time against the actual interaction. Consider time to first token, total completion time, network overhead, retries, and whether the user must wait or can work asynchronously.
-21. **Hardest technical assumption.** Identify the assumption most likely to break the product. Distinguish a convincing demo from a dependable implementation.
-22. **Reliability and maintenance.** Examine edge cases, integrations, platform restrictions, permissions, APIs, dependencies, data formats, compatibility, security, support burden, and ongoing maintenance.
-23. **Builder fit.** Assess whether this particular user can realistically build, debug, test, and verify the core advantage with their actual skills and resources. Vibe-coded code that the builder cannot understand or validate is a risk. Flag specialist engineering requirements plainly.
+### Gate 3: Willingness-to-Pay (WTP) & Unit Economics (Weight: 20%)
 
-### Scope, viability, and decision quality
+Measures whether users will actually pull out a credit card and whether the business model is economically viable.
 
-24. **Audience sufficiency.** Decide whether the group that experiences the problem frequently enough is large or reachable enough for the user's goal. A niche is not automatically bad, but "some specialist might need this" is not evidence of a viable audience.
-25. **Defensibility.** Assess honestly what would stop an existing product or another developer from copying the feature. Do not demand a venture-scale moat from a personal utility, but do not pretend a copyable feature is defensible.
-26. **Distribution.** Identify a credible way to reach the intended users. Name actual channels and explain why those users would discover and trust the product. A theoretical app-store listing is not a distribution strategy.
-27. **Personal and commercial value separately.** Give separate judgments for (a) whether it is worth this user's development time as a personal/learning project and (b) whether it has commercial potential, when both are relevant. A project can be personally worthwhile without being a business, or commercially interesting but a poor fit for this builder.
-28. **Fatal weaknesses override strengths.** Do not average away a decisive flaw. A close existing equivalent, trivial workaround, negligible frequency, unjustifiable adoption cost, infeasible core assumption, or lack of meaningful advantage can override strengths elsewhere.
-29. **Uncertainty and confidence.** State what is known, inferred, and unknown. Explain confidence and identify which missing evidence could change the verdict. Absence of search results is not proof that nothing exists.
-30. **Cheapest decisive test.** Recommend the smallest, cheapest experiment that could resolve the most important uncertainty before substantial development. Examples include a targeted competitor search, a few user interviews, a landing-page test, a manual concierge test, a throwaway prototype, or measuring a real workflow.
+* **3.1 Economic Justification & Pricing Reality (0–10 pts):**
+  * *10 = Obvious Financial ROI:* Charging \$50/mo to save \$500/mo in labor or recover \$2,000 in lost revenue. B2B corporate card expense.
+  * *5 = High Consumer Delight:* Niche hobbyist with obsessive spending habits (e.g. vintage watch collectors, competitive powerlifters), but high churn risk.
+  * *0 = The \$10/mo Delusion:* Charging a monthly fee for something consumers expect to be free, or where the utility delivered is worth pennies at best.
+* **3.2 Margin & Cost-to-Serve:**
+  * If the app uses third-party APIs (crypto node data, SMS, AI tokens), does heavy usage by a power user turn unit economics negative?
 
-### Two explicit cross-cutting rejection rules
+---
 
-31. **Total expected benefit must justify both sides' effort.** Evaluate the expected value against both user adoption effort and developer effort. For users, include finding, installing, configuring, learning, using, and maintaining the product. For the developer, include building, validating, distributing, supporting, and maintaining it. A product can save users a little time and still be a bad use of the developer's weeks. A useful estimate is: expected benefit = incident frequency × consequence per incident × proportion prevented, adjusted for realistic adoption and reachable users. Rare events can justify a product if consequences are severe; minor annual inconveniences usually cannot.
-32. **Check the trivial built-in action before proposing automation.** Walk through the existing workflow and check for a normal button, setting, shortcut, confirmation, or built-in feature that already solves the problem adequately. If "Save As → Replace" solves it, do not pitch a download manager unless repeated, substantial savings are demonstrated.
+### Gate 4: Distribution & The First 10 Customers (Weight: 15%)
 
-## Research standard
+Measures whether the creator can actually get this in front of paying humans without paying for ads.
 
-Research is mandatory before any Develop verdict and before presenting a candidate idea as if it has survived inspection.
+* **4.1 Day-1 Distribution Channel (0–10 pts):**
+  * *10 = Unfair Proprietary Access:* The creator already runs an engaged community, newsletter, client roster, or Discord of 500+ exact target buyers.
+  * *5 = Concentrated Watercooler:* The audience gathers in specific, identifiable subreddits, forums, or directories where high-signal manual outreach works.
+  * *0 = Diffuse / Broadcast Praying:* Audience is scattered ("anyone who trades crypto"). The only distribution plan is "post on X", "make TikToks", or "launch on Product Hunt".
+* **4.2 The "First 10 Customers This Week" Test:**
+  * Can the founder manually contact and pitch 10 specific real people within 7 days without spending a dime on ads?
 
-Search using multiple formulations:
-- The problem described in the user's language.
-- The user's workflow and desired outcome.
-- Feature combinations and technical terms.
-- Synonyms, adjacent categories, and alternative approaches.
-- Names of likely products, projects, APIs, and relevant communities.
+---
 
-Investigate more than search-result titles. When relevant, inspect product documentation, demos, pricing, changelogs, release history, GitHub source, issues, discussions, screenshots, and actual workflows. Determine whether a competitor is functionally equivalent, partially overlapping, or merely adjacent.
+### Gate 5: Founder Wedge & Defensibility (Weight: 10%)
 
-Include:
-- Mainstream commercial products.
-- Small indie products and browser extensions.
-- GitHub repositories, including low-star and abandoned projects.
-- Startups and products with limited visibility.
-- Research prototypes and academic work when relevant.
-- Built-in platform features and ordinary tools.
-- Scripts and workflows that users can create themselves.
+Measures why *this* founder can win and whether the app has any staying power.
 
-Follow promising leads until the functional overlap is clear. Search until additional searches stop materially changing the competitive picture, and report important gaps. Do not claim that no competitor exists based on a few searches.
+* **5.1 Founder Wedge (0–10 pts):**
+  * Does the founder have unique insider domain knowledge, a proprietary dataset, or deep technical capability that a random copycat lacks?
+* **5.2 Defensibility & Copycat Ease:**
+  * Could an experienced full-stack developer or an indie hacker replicate this app in 72 hours using Cursor or Antigravity? If yes, what prevents instant commoditization?
 
-For each important alternative, report:
-- Name and source link.
-- What it actually does.
-- The overlap with the proposed idea.
-- Important differences or missing capabilities.
-- Evidence quality and recency.
-- Whether it is a direct equivalent, partial substitute, or adjacent tool.
+---
 
-Cite sources next to factual claims. Prefer primary sources for product capabilities and repositories. Use user discussions and reviews as evidence of experience or demand, not as unquestionable fact. Do not fabricate sources, product capabilities, adoption figures, or market sizes.
+## Verdict & Quality Score Matrix
 
-## Staged workflow
+```
+[Quality Score: 0 - 100]
+85 – 100 : DEVELOP (Greenlit for 2-Week MVP)
+65 – 84  : CONDITIONAL (Investigate / Pre-sale Test Required)
+45 – 64  : PIVOT REQUIRED (Reposition to acute pain/B2B wedge)
+ < 45    : REJECT (Dead on Arrival — Do Not Build)
 
-### Stage 1: Lead review and quick rejection screen
+*OVERRIDE RULE: If any of the 6 Hard Kill Switches trip, the verdict is REJECT regardless of score.
+```
 
-The lead reviewer frames the product and applies the obvious kill tests before expensive research:
+---
 
-- Is the problem concrete?
-- Does the specific failure happen often enough or have severe enough consequences?
-- Is there already a close equivalent?
-- Is the current workaround trivial?
-- Could a tiny script, coding agent, or manual action solve it adequately?
-- Would users install and maintain another tool for this benefit?
-- Is the core idea technically plausible for this builder?
+## Required Output Format
 
-If a decisive failure is already established, return Reject with evidence. Do not launch a theatrical multi-agent review to rediscover an obvious answer. If the idea is not yet rejectable, continue.
+When invoked (via `$evaluate-app-idea [idea or pitch]`), produce an evidence-backed diagnostic report:
 
-### Stage 2: Evidence-based investigation
+```markdown
+# App Idea Evaluation: [Product Name / One-Liner]
 
-Conduct the full competitor and alternative research. Complete all 32 criteria. Research the strongest substitutes before claiming differentiation.
+## 1. Executive Verdict & Quality Score
+* **Verdict:** [DEVELOP / CONDITIONAL / PIVOT REQUIRED / REJECT]
+* **Quality Score:** [Score]/100
+* **Fatal Overrides Tripped:** [None / Name of Kill Switch with 1-sentence proof]
+* **The Bottom Line:** [1 brutal sentence explaining why this succeeds or dies]
 
-If the idea fails, explain why and stop. Do not add speculative features or invent a different audience to rescue it. If a specific uncertainty is the only blocker, use Investigate further or recommend a narrowly scoped prototype.
+---
 
-### Stage 3: Independent sub-agent review for surviving ideas
+## 2. The Core Assumption (BuilderOS Standard)
+> "[The single statement that must be true for this business to survive. If false, the project is dead.]"
 
-Use sub-agents only when the idea survives the quick screen and independent work can add evidence. Keep the initial reviews independent. Do not prime agents with another reviewer's conclusion.
+---
 
-Use these roles when the environment supports sub-agents:
+## 3. The Closest Substitute & Switching Analysis
+* **The Closest Mundane Option:** [What users do right now — e.g. Apple Notes, spreadsheets, free DexScreener tabs, doing nothing]
+* **The Incumbent / Free Landscape:** [Existing products, open-source projects, or free tools found during search]
+* **The Switching Friction vs. Direct Advantage:** [Why users will or will not switch. Is the advantage 10x or <1.5x?]
 
-1. **Competitor investigator:** Search independently for direct and adjacent alternatives, including obscure repositories, indie apps, abandoned products, research, and built-in functionality. Report evidence and functional overlap.
-2. **Adversarial reviewer:** Try to kill the idea. Challenge problem frequency, demand, adoption effort, trivial workarounds, claimed advantage, switching, distribution, and unsupported assumptions.
-3. **Technical/economics specialist (conditional):** Add only when the main uncertainty involves difficult engineering, platform integration, reliability, AI inference cost, or latency.
+---
 
-The lead reviewer reconciles the findings and checks sources. No voting, majority rule, or consensus theater. Three agents agreeing is not proof. Conflicting claims must be investigated or reported as unresolved.
+## 4. The 5-Gate Scorecard
 
-If sub-agents are unavailable, perform the roles as separate analytical passes and clearly state that no independent agents were actually run. Never claim to have launched agents when the environment did not support it.
+| Gate | Focus | Weight | Score (0–10) | Weighted | Brutal Diagnosis & Evidence |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Gate 1** | Problem Reality & Pain Urgency | 25% | _/10 | _/25 | [Specific evidence of pain/workaround] |
+| **Gate 2** | Closest Substitute & Switching Leap | 30% | _/10 | _/30 | [Comparison against closest option] |
+| **Gate 3** | Willingness to Pay & Economics | 20% | _/10 | _/20 | [ROI justification for pricing] |
+| **Gate 4** | Distribution & First 10 Customers | 15% | _/10 | _/15 | [Direct channel reality check] |
+| **Gate 5** | Founder Wedge & Defensibility | 10% | _/10 | _/10 | [Moat and copycat defense] |
+| **TOTAL** | **Quality Score** | **100%** | | **_/100** | **[VERDICT]** |
 
-### Stage 4: Final decision
+---
 
-Choose exactly one primary verdict:
+## 5. Fatal Flaws & Red Flags (Max 3)
+| Risk / Flaw | Severity | Why It Kills the Business | Cheap Behavioral Test to Verify |
+| :--- | :--- | :--- | :--- |
+| ... | High | ... | ... |
 
-- **Reject:** The idea does not justify development under the stated goal and evidence.
-- **Investigate further:** A potentially important uncertainty remains; more evidence is needed before committing.
-- **Prototype:** The idea has a plausible advantage, but a narrow experiment is needed to validate its hardest assumption.
-- **Develop:** The evidence supports investing in a real implementation.
+---
 
-A Develop verdict requires a specific, defensible advantage, credible demand, adequate differentiation from alternatives, acceptable adoption and development costs, and feasible execution. Do not issue it while major competitor research is incomplete.
+## 6. The Action Plan (If Not Rejected)
+* **First 10 Customers Playbook:** 3 concrete manual outreach actions for this week.
+* **2-Week MVP Test:**
+  * **Build:** The minimum testable core.
+  * **Cut:** Everything else (auth, settings, multi-tier billing).
+  * **14-Day Validation Test:** Exact criteria for pass/fail.
+```
 
-A project may receive different personal-project and commercial verdicts. State both when relevant.
+---
 
-## Calibration examples from the original design
+## Calibration Benchmarks
 
-Use these as reasoning examples, not as predetermined conclusions or current competitor research.
+### 1. The Meme Coin Tracker (The \$10/mo Commodity Delusion)
+* **Pitch:** An app that tracks meme coin price movements, pumps, and liquidity, charging \$10/month.
+* **Closest Substitute:** DexScreener, Birdeye, CoinGecko, Telegram alert bots, pump.fun terminal (all 100% free with massive server infrastructure).
+* **Verdict:** **REJECT (Score: 18/100)**
+* **Kill Switch Tripped:** *The Public Commodity Wrapper Trap* & *The Zero-WTP Delusion*. Zero proprietary signal, charging \$10/month for public API wrappers that free tools do 100x better.
 
-### Typer / Completionist
+### 2. The Custom Habit Tracker (The Apple Notes Trap)
+* **Pitch:** A beautiful, minimal habit and routine tracker with streak animations for \$4.99/mo.
+* **Closest Substitute:** Apple Notes bullet list, pen and paper, free default phone alarms, or existing free habit apps (Streaks, Habitica).
+* **Verdict:** **REJECT (Score: 32/100)**
+* **Kill Switch Tripped:** *The "Notes App / Status Quo" Superiority*. The switching friction of maintaining a dedicated app for daily micro-tasks leads to 90% churn in 30 days.
 
-The original author considered Typer interesting because it appeared to combine system-wide Windows candidate autocomplete, local word ranking, AI phrase completion, and Text Services Framework (TSF) integration in an unusual way. Treat that combination as a hypothesis worth investigating. The combination matters only if it creates a user-visible advantage, and the technical complexity must be weighed against the builder's ability to debug and verify it.
-
-### Flexrouter
-
-The original author became much less interested in Flexrouter after discovering a mature project with roughly 77,000 stars and dozens of contributors that solved essentially the same problem. The lesson is not that star count alone decides the issue. The lesson is to discover mature functional equivalents early and determine whether the proposed product has a meaningful advantage.
-
-### Windows text-input compatibility debugger
-
-A proposed diagnostic tool for developers building text-input integrations sounded technically interesting, but the target audience was extremely niche and the workflow might be solved by testing a few apps or building a quick internal diagnostic. It was rejected for the original builder because the problem was too specialized and the required engineering was a poor fit. General rule: a real problem does not automatically justify a standalone product.
-
-### Attachment mistake guard
-
-A browser extension that warns when a user attaches an older copy of a document sounded plausible, but the actual mistake might happen only once a year. The setup and installation effort outweighed the expected benefit for a minor, rare failure. General rule: measure the frequency of the actual failure, not the surrounding activity.
-
-### Repeated-download updater
-
-A tool that routes repeated exports into a designated file sounded useful until the simple built-in Save As → Replace workflow was considered. General rule: compare against the actual easiest action, not an unnecessarily cumbersome workaround.
-
-### AI feedback linked to document versions
-
-A browser extension that linked AI review comments to the exact document version sounded plausible, but the user immediately identified that the capability already existed. General rule: research before presenting a candidate as novel, and require a meaningful advantage over existing equivalents.
-
-## Required output format
-
-Keep the report direct and evidence-heavy. Do not bury the verdict in a long generic essay.
-
-1. **Verdict:** One of Reject / Investigate further / Prototype / Develop.
-2. **One-sentence decision:** Why it does or does not deserve development.
-3. **Idea as understood:** User, problem, workflow, product, and claimed advantage. List assumptions.
-4. **Strongest case for it:** Best evidence supporting demand and advantage.
-5. **Strongest case against it:** The most serious rejection argument.
-6. **Competitor and substitute landscape:** Direct equivalents, partial substitutes, adjacent tools, built-in actions, ChatGPT/general AI, disposable scripts, and manual workarounds. Cite sources.
-7. **32-criterion assessment:** A compact table with criterion, status, and evidence/reason. Do not omit criteria. Use Unknown rather than inventing a pass.
-8. **Technical and economic assessment:** Hardest assumption, feasibility for this builder, reliability, AI necessity, cost, and latency where relevant.
-9. **Sub-agent findings:** Separate independent findings and unresolved conflicts, or explicitly state that sub-agents were unavailable/not used.
-10. **What would change the verdict:** Specific evidence or conditions, not vague optimism.
-11. **Cheapest decisive next test:** One practical test with a clear success/failure condition.
-12. **Final rationale:** If recommending development, complete this sentence: "Build this because [specific users] repeatedly need [outcome], and existing options fail at [important limitation]." If that sentence cannot be supported, do not give a Develop verdict.
-
-## Behavioral constraints
-
-- Do not flatter the idea or the user.
-- Do not invent demand, competitors, metrics, citations, or technical certainty.
-- Do not treat a lack of search results as proof of novelty.
-- Do not equate GitHub stars with functional equivalence or product quality.
-- Do not count surrounding activity as evidence that the failure itself is frequent.
-- Do not compare against an artificially inconvenient workaround.
-- Do not recommend a product when a built-in action is already adequate.
-- Do not rescue a failed pitch by adding features or changing audiences without explicit permission.
-- Do not let a numerical score, average, or agent consensus override a fatal weakness.
-- Do not fabricate a weighted score. The source design specifies categorical judgments and verdict logic, not a validated numerical weighting formula.
-- Distinguish facts, estimates, assumptions, and hypotheses.
-- Preserve user agency: give a reasoned recommendation, not a command.
+### 3. YC Classic: Carta (Replacing Cap Table Spreadsheets)
+* **Pitch:** Software to track startup equity, cap tables, and investor options.
+* **Closest Substitute:** A messy Excel file maintained by a lawyer at \$800/hour.
+* **Verdict:** **DEVELOP (Score: 92/100)**
+* **Analysis:** Bleeding-neck pain (costly legal mistakes, fundraising diligence chaos), massive financial ROI (saves thousands in legal fees), defensible network effects between companies and investors.
